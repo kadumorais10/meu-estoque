@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  email      String    @unique
+  password   String
+  created_at DateTime  @default(now())
+  deleted_at DateTime? @db.Timestamp(6)
+  name       String
+  type       UserType
+  updated_at DateTime  @updatedAt
+  id         Int       @id @default(autoincrement())
+}
+
+model Product {
+  id          Int             @id @default(autoincrement())
+  name        String
+  sku         String          @unique
+  description String?
+  price       Decimal
+  quantity    Int             @default(0)
+  min_quantity  Int             
+  created_at  DateTime        @default(now())
+  updated_at  DateTime        @updatedAt
+  movements   StockMovement[]
+}
+
+model StockMovement {
+  id                Int          @id @default(autoincrement())
+  product_id        Int
+  type              MovementType
+  quantity          Int
+  previous_quantity Int
+  new_quantity      Int
+  reason            String
+  created_at        DateTime     @default(now())
+  product           Product      @relation(fields: [product_id], references: [id])
+}
+
+enum UserType {
+  ADMIN
+  OPERADOR
+  GERENTE
+}
+
+enum MovementType {
+  IN
+  OUT
+  ADJUST
+  LOSS
+}
