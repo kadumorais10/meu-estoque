@@ -11,7 +11,7 @@ class UserController {
       res.status(201).json(user);
     } catch (err: any) {
       res.status(400).json({ error: err.message });
-      console.log("erro de registro"+err);
+      console.log("erro de registro" + err);
     }
   }
 
@@ -32,6 +32,15 @@ class UserController {
       const { id } = req.params;
       const result = await userService.deleteUser(Number(id));
       res.json(result);
+    } catch (err: any) {
+      res.status(400).json({ error: err.message });
+    }
+  }
+
+  async checkFirstAccess(req: Request, res: Response) {
+    try {
+      const isFirstAccess = await userService.checkFirstAccess();
+      res.json({ isFirstAccess });
     } catch (err: any) {
       res.status(400).json({ error: err.message });
     }

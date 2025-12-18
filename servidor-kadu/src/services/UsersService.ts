@@ -4,7 +4,12 @@ import { generateToken } from "../utils/generateToken";
 import { UserType } from "@prisma/client";
 
 class UserService {
-  async register(name: string, email: string, password: string, type: UserType) {
+  async register(
+    name: string,
+    email: string,
+    password: string,
+    type: UserType
+  ) {
     const exists = await prisma.user.findUnique({ where: { email } });
 
     if (exists) throw new Error("Email já cadastrado.");
@@ -44,6 +49,11 @@ class UserService {
     await prisma.user.delete({ where: { id } });
 
     return { message: "Usuário deletado com sucesso." };
+  }
+
+  async checkFirstAccess() {
+    const userCount = await prisma.user.count();
+    return userCount === 0;
   }
 }
 

@@ -7,8 +7,8 @@ export function Header() {
   const navigate = useNavigate();
 
   function handleLogout() {
-    logout();         // limpa token/estado do usuário
-    navigate("/");    // redireciona para a tela de login
+    logout();
+    navigate("/");
   }
 
   return (
