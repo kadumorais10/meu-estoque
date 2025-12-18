@@ -13,3 +13,10 @@ api.interceptors.request.use((config) => {
 
   return config;
 });
+
+export async function checkFirstAccess() {
+  const response = await api.get<{ isFirstAccess: boolean }>(
+    "/users/check-first-access"
+  );
+  return response.data;
+}

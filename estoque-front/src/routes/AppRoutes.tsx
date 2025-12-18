@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "../pages/Login";
+import FirstAccess from "../pages/FirstAccess";
 import Dashboard from "../pages/Dashboard";
 import Products from "../pages/Products/index";
 import Movements from "../pages/Movements";
@@ -13,10 +14,9 @@ import { AppLayout } from "../layouts/AppLayout";
 export function AppRoutes() {
   return (
     <Routes>
-      {/* públicas */}
       <Route path="/login" element={<Login />} />
+      <Route path="/first-access" element={<FirstAccess />} />
 
-      {/* privadas */}
       <Route element={<PrivateRoute />}>
         <Route element={<AppLayout />}>
           <Route path="/" element={<Navigate to="/dashboard" />} />
@@ -24,14 +24,12 @@ export function AppRoutes() {
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id/movements" element={<Movements />} />
 
-          {/* rota de admin */}
           <Route element={<AdminRoute />}>
             <Route path="/users" element={<Users />} />
           </Route>
         </Route>
       </Route>
 
-      {/* catch-all */}
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );

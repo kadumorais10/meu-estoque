@@ -4,6 +4,9 @@ import { authMiddleware } from "../middlewares/auth.middleware";
 
 const router = Router();
 
+// Verificar primeiro acesso (pública)
+router.get("/check-first-access", userController.checkFirstAccess);
+
 // Criar usuário
 router.post("/register", userController.register);
 
@@ -17,6 +20,5 @@ router.get("/me", authMiddleware, (req: any, res) => {
 
 // Deletar usuário (protegida)
 router.delete("/:id", authMiddleware, userController.delete);
-
 
 export default router;
